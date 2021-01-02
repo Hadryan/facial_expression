@@ -19,13 +19,10 @@ class face_detect:
         return face_list
 
     def detect_face(self,image_file):
-        flag = False
         self.current_time = int(time.strftime('%c', time.localtime(time.time()))[-7:-5])
         people = []
         gray_img = cv2.cvtColor(image_file, cv2.COLOR_BGR2GRAY) # change image to gray color
         face_list = self.load_cascade_file_n_coordinate(gray_img)
-        if abs(self.base_time - self.current_time) % 10 == 0 and abs(self.base_time - self.current_time) != 0:
-            flag = True
         if len(face_list) > 0:
             for face in face_list:
                 x, y, w, h = face
@@ -35,10 +32,7 @@ class face_detect:
                 cv2.waitKey(1)
                 people.append(face_img)
 
-        else:
-            print("no face")
-
-        return people, flag
+        return people
 
 
 if __name__ == '__main__':
