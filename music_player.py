@@ -49,9 +49,6 @@ class Music_Player:
         self.youtube_player()
 
     def show_playlist(self):
-        # for i, music in enumerate(self.playlist.values()):
-        #     if len(music) == 2:
-        #         print('%s' % music[0][:-11])
         return self.current_music, self.playlist.values()
 
     def mute_vlc(self, status=True):

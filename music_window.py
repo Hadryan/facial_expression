@@ -32,7 +32,6 @@ class Music_Window(QtWidgets.QMainWindow):
         self.MP = Music_Player(playlist, maximum=1)
         self.MP.youtube_player()
         self.music_name_label.setText(self.MP.current_music)
-        self.music_name_label.adjustSize()
 
     @pyqtSlot()
     def next_song(self):
@@ -42,28 +41,27 @@ class Music_Window(QtWidgets.QMainWindow):
     @pyqtSlot()
     def playlist(self):
         cur, playlist = self.MP.show_playlist()
-        self.music_name_label.setWordWrap(True)
-        self.music_name_label.setText(cur)
-        self.music_name_label.adjustSize()
-        for i, music in enumerate(playlist):
-            if len(music) == 2:
-                self.music_name_label.setText(music[0][:-11])
+        if self.MP.is_vlc_playing():
+            self.music_name_label.setWordWrap(True)
+            self.music_name_label.setText(cur)
+            for i, music in enumerate(playlist):
+                if len(music) == 2:
+                    self.music_name_label.setText(music[0][:-11])
 
     @pyqtSlot()
     def resume(self):
         self.MP.play_vlc()
-        self.music_name_label.setText(self.MP.current_music)
-        self.music_name_label.adjustSize()
+        if self.MP.is_vlc_playing():
+            self.music_name_label.setText(self.MP.current_music)
 
     @pyqtSlot()
     def pause(self):
         self.MP.pause_vlc()
         self.music_name_label.setText("Music is paused")
-        self.music_name_label.adjustSize()
 
     @pyqtSlot()
     def stop(self):
         self.MP.stop_vlc()
-        self.music_name_label.setText("Music is stopped")
-        self.music_name_label.adjustSize()
+        if self.MP.is_vlc_playing():
+            self.music_name_label.setText("Music is stopped")
 

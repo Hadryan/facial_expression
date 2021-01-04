@@ -132,6 +132,8 @@ class Main_Window(QtWidgets.QMainWindow):
             self.start_youtube_music()
         elif text.lower() == 'webcam':
             self.start_webcam()
+        elif text.lower() == 'exit music':
+            self.music_window.close()
         else:
             self.chat_output_label.setText("This command is not in the list")
         self.input.clear()
