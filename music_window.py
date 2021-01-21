@@ -13,15 +13,14 @@ class Music_Window(QtWidgets.QMainWindow):
     def __init__(self, tracks):
         super(Music_Window, self).__init__()
         loadUi("./gui/music_window.ui", self)
-        self.resume_button.clicked.connect(self.resume)
+        self.start_button.clicked.connect(self.start)
         self.pause_button.clicked.connect(self.pause)
         self.stop_button.clicked.connect(self.stop)
         self.next_song_button.clicked.connect(self.next_song)
         self.playlist_button.clicked.connect(self.playlist)
-        self.YT = Youtube_Player(maximum=3)
+        self.YT = None
         self.MP = None
         self.tracks = tracks
-        self.search_music()
 
     def search_music(self):
         self.YT.is_existed_playlist = False
@@ -35,33 +34,39 @@ class Music_Window(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def next_song(self):
-        self.MP.stop_vlc()
-        self.MP.next_song()
+        if self.MP:
+            self.MP.stop_vlc()
+            self.MP.next_song()
 
     @pyqtSlot()
     def playlist(self):
-        cur, playlist = self.MP.show_playlist()
-        if self.MP.is_vlc_playing():
-            self.music_name_label.setWordWrap(True)
-            self.music_name_label.setText(cur)
-            for i, music in enumerate(playlist):
-                if len(music) == 2:
-                    self.music_name_label.setText(music[0][:-11])
+        if self.MP:
+            cur, playlist = self.MP.show_playlist()
+            if self.MP.is_vlc_playing():
+                self.music_name_label.setWordWrap(True)
+                self.music_name_label.setText(cur)
+                for i, music in enumerate(playlist):
+                    if len(music) == 2:
+                        self.music_name_label.setText(music[0][:-11])
 
     @pyqtSlot()
-    def resume(self):
-        self.MP.play_vlc()
-        if self.MP.is_vlc_playing():
-            self.music_name_label.setText(self.MP.current_music)
+    def start(self):
+        if not self.YT:
+            self.YT = Youtube_Player(maximum=3)
+            self.search_music()
 
     @pyqtSlot()
     def pause(self):
-        self.MP.pause_vlc()
-        self.music_name_label.setText("Music is paused")
+        if self.MP:
+            self.MP.pause_vlc()
+            self.music_name_label.setText("Music is paused")
 
     @pyqtSlot()
     def stop(self):
-        self.MP.stop_vlc()
-        if self.MP.is_vlc_playing():
-            self.music_name_label.setText("Music is stopped")
+        if self.MP:
+            self.MP.stop_vlc()
+            if self.MP.is_vlc_playing():
+                self.music_name_label.setText("Music is stopped")
+            self.YT = None
+            self.MP = None
 

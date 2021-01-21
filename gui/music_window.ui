@@ -45,6 +45,21 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
+        <widget class="QPushButton" name="start_button">
+         <property name="font">
+          <font>
+           <family>Adobe Arabic</family>
+           <pointsize>24</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Start</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="pause_button">
          <property name="font">
           <font>
@@ -60,7 +75,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="resume_button">
+        <widget class="QPushButton" name="playlist_button">
          <property name="font">
           <font>
            <family>Adobe Arabic</family>
@@ -70,7 +85,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Resume</string>
+          <string>Cur</string>
          </property>
         </widget>
        </item>
@@ -86,21 +101,6 @@
          </property>
          <property name="text">
           <string>Next </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="playlist_button">
-         <property name="font">
-          <font>
-           <family>Adobe Arabic</family>
-           <pointsize>24</pointsize>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Playlist</string>
          </property>
         </widget>
        </item>
